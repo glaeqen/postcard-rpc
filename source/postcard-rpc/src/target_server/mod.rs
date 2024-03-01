@@ -135,7 +135,7 @@ where
             let mut window = &mut rx_buf[..];
             'buffer: loop {
                 if window.is_empty() {
-                    #[cfg(feature = "defmt")]
+                    #[cfg(feature = "use-defmt")]
                     defmt::warn!("Overflow!");
                     let mut bonus: usize = 0;
                     loop {
@@ -178,7 +178,7 @@ where
             let len = rx_buf.len() - wlen;
             let frame = &rx_buf[..len];
 
-            #[cfg(feature = "defmt")]
+            #[cfg(feature = "use-defmt")]
             defmt::debug!("got frame: {=usize}", frame.len());
 
             // If it's for us, process it
