@@ -31,7 +31,7 @@ where
     pub fn new_with_wire<WTX, WRX, WSP>(
         tx: WTX,
         rx: WRX,
-        mut sp: WSP,
+        sp: &mut WSP,
         err_uri_path: &str,
         outgoing_depth: usize,
     ) -> Self
@@ -87,6 +87,8 @@ async fn in_worker<W>(
 {
     loop {
         let Ok(res) = wire.receive().await else {
+            // TODO: This have to be changed to a returnable error
+            // In our case, this is usually normal when connection is closed
             warn!("in_worker: wire receive error, exiting");
             return;
         };
